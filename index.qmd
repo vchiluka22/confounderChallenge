@@ -2,10 +2,12 @@
 title: "Using Randomization & Stratification to Overcome a Common-Cause Confounder"
 subtitle: "A visual case study in causal inference with observational vs randomized data"
 format:
-  html: default
+  html:
+    theme: default
+    css: report.css
 bibliography: references.bib
 execute:
-  echo: true
+  echo: false
   eval: true
 ---
 
@@ -28,7 +30,6 @@ Counterintuitively, the surgeon who doesn't "look the part" may actually be the 
 
 ```{python}
 #| label: simulate-data
-#| echo: true
 #| message: false
 #| warning: false
 #| include: false
@@ -80,7 +81,7 @@ patients_df.head()
 
 ```{python}
 #| label: load-data-python
-#| echo: true
+#| output: false
 
 import pandas as pd
 
@@ -99,7 +100,6 @@ Let's use data to figure out which surgeon performs better. @fig-plot-outcomes s
 ```{python}
 #| label: fig-plot-outcomes
 #| fig-cap: "Post-Surgical Symptom Score (lower is better) - Observed Data"
-#| echo: true
 
 import matplotlib.pyplot as plt
 
@@ -111,7 +111,7 @@ doctor_style = {
     "Doc Duck": {"color": duck_color, "marker": "^", "label": "Doc Duck"},
 }
 
-fig, ax = plt.subplots(figsize=(10.5, 5.2))
+fig, ax = plt.subplots(figsize=(7.5, 3.6))
 
 for doctor_name, style in doctor_style.items():
     subset = patients_df.loc[patients_df["doctor_name"] == doctor_name, :]
@@ -153,7 +153,7 @@ ax.text(
     transform=ax.transAxes,
     ha="left",
     va="top",
-    fontsize=11,
+    fontsize=9,
     color=dreamy_color,
 )
 ax.text(
@@ -163,17 +163,18 @@ ax.text(
     transform=ax.transAxes,
     ha="left",
     va="top",
-    fontsize=11,
+    fontsize=9,
     color=duck_color,
 )
 
-ax.set_title("Post-Surgical Symptom Score by Patient and Doctor", fontsize=14, pad=10)
-ax.set_xlabel("Patient Number", fontsize=12)
-ax.set_ylabel("Post-Surgical Symptom Score (Lower is Better)", fontsize=12)
+ax.set_title("Post-Surgical Symptom Score by Patient and Doctor", fontsize=11, pad=8)
+ax.set_xlabel("Patient Number", fontsize=9)
+ax.set_ylabel("Post-Surgical Symptom Score (Lower is Better)", fontsize=9)
+ax.tick_params(axis="both", which="major", labelsize=9)
 
 ax.grid(True, which="major", axis="both", linestyle="-", linewidth=0.6, alpha=0.25)
 ax.set_axisbelow(True)
-ax.legend(frameon=False, loc="upper right")
+ax.legend(frameon=False, loc="upper right", fontsize=9)
 
 ax.set_xlim(0, patients_df["patient"].max() + 5)
 ax.margins(y=0.08)
@@ -225,7 +226,6 @@ Since we cannot rerun history with randomization, we run an experiment to collec
 
 ```{python}
 #| label: simulate-data-randomized
-#| echo: true
 #| message: false
 #| warning: false
 #| include: false
@@ -273,7 +273,7 @@ patients_randomized_df.head()
 
 ```{python}
 #| label: load-data-randomized-python
-#| echo: true
+#| output: false
 
 import pandas as pd
 
@@ -292,7 +292,6 @@ patients_randomized_df.head()
 ```{python}
 #| label: fig-plot-outcomes-randomized
 #| fig-cap: "Post-Surgical Symptom Score (lower is better) for randomized patients."
-#| echo: true
 
 import matplotlib.pyplot as plt
 
@@ -304,7 +303,7 @@ doctor_style = {
     "Doc Duck": {"color": duck_color, "marker": "^", "label": "Doc Duck"},
 }
 
-fig, ax = plt.subplots(figsize=(10.5, 5.2))
+fig, ax = plt.subplots(figsize=(7.5, 3.6))
 
 for doctor_name, style in doctor_style.items():
     subset = patients_randomized_df.loc[
@@ -350,7 +349,7 @@ ax.text(
     transform=ax.transAxes,
     ha="left",
     va="top",
-    fontsize=11,
+    fontsize=9,
     color=dreamy_color,
 )
 ax.text(
@@ -360,17 +359,18 @@ ax.text(
     transform=ax.transAxes,
     ha="left",
     va="top",
-    fontsize=11,
+    fontsize=9,
     color=duck_color,
 )
 
-ax.set_title("Post-Surgical Symptom Score (Randomized Assignment)", fontsize=14, pad=10)
-ax.set_xlabel("Patient Number", fontsize=12)
-ax.set_ylabel("Post-Surgical Symptom Score (Lower is Better)", fontsize=12)
+ax.set_title("Post-Surgical Symptom Score (Randomized Assignment)", fontsize=11, pad=8)
+ax.set_xlabel("Patient Number", fontsize=9)
+ax.set_ylabel("Post-Surgical Symptom Score (Lower is Better)", fontsize=9)
+ax.tick_params(axis="both", which="major", labelsize=9)
 
 ax.grid(True, which="major", axis="both", linestyle="-", linewidth=0.6, alpha=0.25)
 ax.set_axisbelow(True)
-ax.legend(frameon=False, loc="upper right")
+ax.legend(frameon=False, loc="upper right", fontsize=9)
 
 ax.set_xlim(0, patients_randomized_df["patient"].max() + 5)
 ax.margins(y=0.08)
@@ -388,7 +388,6 @@ The key to handling a common cause confounder is to stratify by the common cause
 ```{python}
 #| label: fig-plot-outcomes-severity
 #| fig-cap: "Post-Surgical Symptom Score (lower is better) by Patient and Severity"
-#| echo: true
 
 import matplotlib.pyplot as plt
 
@@ -400,7 +399,7 @@ doctor_style = {
     "Doc Duck": {"color": duck_color, "marker": "^", "label": "Doc Duck"},
 }
 
-fig, ax = plt.subplots(figsize=(10.5, 5.2))
+fig, ax = plt.subplots(figsize=(7.5, 3.6))
 
 ax.axvspan(-1, 1, alpha=0.15, color="gray", zorder=0)
 
@@ -444,7 +443,7 @@ ax.text(
     transform=ax.transAxes,
     ha="left",
     va="top",
-    fontsize=11,
+    fontsize=9,
     color=dreamy_color,
 )
 ax.text(
@@ -454,17 +453,18 @@ ax.text(
     transform=ax.transAxes,
     ha="left",
     va="top",
-    fontsize=11,
+    fontsize=9,
     color=duck_color,
 )
 
-ax.set_title("Post-Surgical Symptom Score by Patient Severity", fontsize=14, pad=10)
-ax.set_xlabel("Initial Patient Severity", fontsize=12)
-ax.set_ylabel("Post-Surgical Symptom Score (Lower is Better)", fontsize=12)
+ax.set_title("Post-Surgical Symptom Score by Patient Severity", fontsize=11, pad=8)
+ax.set_xlabel("Initial Patient Severity", fontsize=9)
+ax.set_ylabel("Post-Surgical Symptom Score (Lower is Better)", fontsize=9)
+ax.tick_params(axis="both", which="major", labelsize=9)
 
 ax.grid(True, which="major", axis="both", linestyle="-", linewidth=0.6, alpha=0.25)
 ax.set_axisbelow(True)
-ax.legend(frameon=False, loc="upper right")
+ax.legend(frameon=False, loc="upper right", fontsize=9)
 
 ax.margins(x=0.05, y=0.08)
 fig.tight_layout()

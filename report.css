@@ -1,0 +1,12 @@
+/* Fit matplotlib outputs to the page width — avoids horizontal scrollbars */
+.quarto-figure.quarto-float-fig img.figure-img,
+.cell-output-display img {
+  max-width: 100%;
+  height: auto;
+}
+
+.quarto-float.quarto-figure,
+figure.quarto-float-fig {
+  overflow: visible;
+  max-width: 100%;
+}
